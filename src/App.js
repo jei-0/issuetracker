@@ -1,9 +1,12 @@
-import "./App.css";
+import Header from "./Components/Header";
+import ProjectsList from "./Components/ProjectsList";
+import { DefaultInitialProject } from "./Containers/Data";
 
 function App() {
   return (
     <div className="App">
-      <h1>IssueTracker</h1>
+      <Header />
+      <ProjectsList data={DefaultInitialProject} />
     </div>
   );
 }
