@@ -1,15 +1,19 @@
 const NewProjectForm = (props) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label>
-          Project Name: <input type="text" />
+          Project Name: <input id="projectName" type="text" />
         </label>
         <label>
-          Project Description: <input type="text" />
+          Project Description: <input id="projectDesc" type="text" />
         </label>
         <label>
-          Project Members: <input type="text" />
+          Project Members: <input id="projectMembers" type="text" />
         </label>
         <div>
           <button type="submit">Submit</button>
