@@ -5,35 +5,35 @@
   "LocalStorageProjectsDataKey": "issuetrackerjo.projects",
   "DefaultInitialProject": [
     {
-      "projectID": "ITPID01",
-      "projectCreationData": {
-        "projectCreator": "Benson",
-        "projectCreationDate": "01/01/2021",
-        "projectCreationTime": "08:32:21"
+      "id": "ITPID01",
+      "creationData": {
+        "creator": "Benson",
+        "date": "01/01/2021",
+        "time": "08:32:21"
       },
-      "projectTitle": "Your First Project",
-      "projectDescription": "This is your first project in IssueTracker!",
-      "projectDeadline": "01/02/2022",
-      "projectMembers": ["Benson", "Mordecai", "Rigby"],
-      "projectIssues": [
+      "title": "Your First Project",
+      "description": "This is your first project in IssueTracker!",
+      "deadline": "01/02/2022",
+      "members": ["Benson", "Mordecai", "Rigby"],
+      "issues": [
         {
-          "issueID": "Issue ID",
-          "issueCreationData": {
-            "issueCreator": "Mordecai",
-            "issueCreationDate": "01/04/2021",
-            "issueCreationTime": "10:04:46"
+          "id": "Issue ID",
+          "creationData": {
+            "creator": "Mordecai",
+            "date": "01/04/2021",
+            "time": "10:04:46"
           },
-          "issueTitle": "Issue Title",
-          "issueDescription": "Issue Description",
-          "issueStatus": "open",
-          "issueComments": [
+          "title": "Issue Title",
+          "description": "Issue Description",
+          "status": "open",
+          "comments": [
             {
-              "commentCreationData": {
-                "commentCreator": "Rigby",
-                "commentCreationDate": "01/04/2021",
-                "commentCreationTime": "10:22:13"
+              "creationData": {
+                "creator": "Rigby",
+                "date": "01/04/2021",
+                "time": "10:22:13"
               },
-              "commentBody": "Comment Body"
+              "body": "Comment Body"
             }
           ]
         }
