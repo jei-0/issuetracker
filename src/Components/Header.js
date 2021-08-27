@@ -1,9 +1,7 @@
-import { AppData } from "../Containers/Data.json";
-
 const Header = (props) => {
   return (
     <header>
-      <h1>{AppData.name}</h1>
+      <h1 className={props.className}>IssueTrackerJO</h1>
     </header>
   );
 };
