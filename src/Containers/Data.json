@@ -8,8 +8,7 @@
       "id": "ITPID01",
       "creationData": {
         "creator": "Benson",
-        "date": "01/01/2021",
-        "time": "08:32:21"
+        "date": "01/01/2021"
       },
       "title": "Your First Project",
       "description": "This is your first project in IssueTracker!",
@@ -20,8 +19,7 @@
           "id": "Issue ID",
           "creationData": {
             "creator": "Mordecai",
-            "date": "01/04/2021",
-            "time": "10:04:46"
+            "date": "01/04/2021"
           },
           "title": "Issue Title",
           "description": "Issue Description",
@@ -30,8 +28,7 @@
             {
               "creationData": {
                 "creator": "Rigby",
-                "date": "01/04/2021",
-                "time": "10:22:13"
+                "date": "01/04/2021"
               },
               "body": "Comment Body"
             }
