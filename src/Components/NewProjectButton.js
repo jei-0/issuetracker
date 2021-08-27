@@ -1,8 +1,7 @@
 const NewProjectButton = (props) => {
-  let onClickHandler;
   return (
     <label>
-      <button onClick={onClickHandler}>+</button> New Project
+      <button onClick={props.onClick}>+</button> New Project
     </label>
   );
 };
