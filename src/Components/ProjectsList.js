@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import NewProjectButton from "./NewProjectButton";
 import ProjectForm from "./ProjectForm";
 
-const ProjectLists = ({ data }) => {
-  const [projectsList, setProjectsList] = useState(data || []);
+const ProjectLists = () => {
+  const [projectsList, setProjectsList] = useState([]);
   const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState({ active: false, project: undefined });
 
@@ -29,13 +29,22 @@ const ProjectLists = ({ data }) => {
     setAdd(false);
   };
 
-  const editProject = (proj) => {
-    if (proj.projectEntry.title || !/^\s*$/.test(proj.projectEntry.title)) {
-      const newProjects = [...projectsList];
-      newProjects[proj.projectIndex] = proj.projectEntry;
-      setProjectsList(newProjects);
+  const editProject = ({ projectEntry, projectIndex }) => {
+    if (projectEntry.title || !/^\s*$/.test(projectEntry.title)) {
+      const projectsPart1 = projectsList.slice(0, projectIndex);
+      const projectsPart2 = projectsList.slice(
+        projectIndex + 1,
+        projectsList.length
+      );
+      setProjectsList([...projectsPart1, projectEntry, ...projectsPart2]);
     }
     setEdit({ active: false, project: undefined });
+  };
+
+  const deleteProject = (proj) => {
+    const newProjects = projectsList.filter((item) => item.id !== proj.id);
+    setProjectsList(newProjects);
+    console.log(projectsList);
   };
 
   if (add) {
@@ -77,6 +86,7 @@ const ProjectLists = ({ data }) => {
               >
                 Edit
               </button>
+              <button onClick={() => deleteProject(project)}>Delete</button>
             </div>
             <p>
               {new Date(project.creationData.date).toLocaleDateString()}{" "}
