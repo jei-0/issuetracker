@@ -5,7 +5,7 @@ import ProjectForm from "./ProjectForm";
 const ProjectLists = ({ data }) => {
   const [projectsList, setProjectsList] = useState(data || []);
   const [add, setAdd] = useState(false);
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState({ active: false, project: undefined });
 
   const jsonKey = "Projects";
 
@@ -29,6 +29,15 @@ const ProjectLists = ({ data }) => {
     setAdd(false);
   };
 
+  const editProject = (proj) => {
+    if (proj.projectEntry.title || !/^\s*$/.test(proj.projectEntry.title)) {
+      const newProjects = [...projectsList];
+      newProjects[proj.projectIndex] = proj.projectEntry;
+      setProjectsList(newProjects);
+    }
+    setEdit({ active: false, project: undefined });
+  };
+
   if (add) {
     return (
       <ProjectForm
@@ -38,12 +47,14 @@ const ProjectLists = ({ data }) => {
       />
     );
   }
-  if (edit) {
+  if (edit.active) {
     return (
       <ProjectForm
         formType="edit"
-        onCancel={() => setEdit(false)}
-        //onSubmit={editProject}
+        projectIndex={edit.index}
+        activeProject={edit.project}
+        onCancel={() => setEdit({ ...edit, active: false })}
+        onSubmit={editProject}
       />
     );
   }
@@ -51,50 +62,54 @@ const ProjectLists = ({ data }) => {
     <div>
       <NewProjectButton
         onClick={() => {
-          setAdd(!add);
-          console.log(add);
+          setAdd(true);
         }}
       />
-      {projectsList.map(
-        (
-          { id, title, description, creationData, members, deadline, issues },
-          n
-        ) => {
-          return (
-            <div key={id + n}>
-              <h2>{title}</h2>
-              <p>
-                {new Date(creationData.date).toLocaleDateString()}{" "}
-                {new Date(creationData.date).toLocaleTimeString()}
-              </p>
-              <div>
-                <h4>Description:</h4>
-                <p>{description}</p>
-              </div>
-              <p>Deadline: {deadline}</p>
-              {members && (
-                <div>
-                  <h4>Members:</h4>
-                  <ul>
-                    {members.map((member, n) => {
-                      return <li key={member + n}>{member}</li>;
-                    })}
-                  </ul>
-                </div>
-              )}
-              {
-                // show number of open issues if any
-                issues?.filter((issue) => issue.status === "open").length && (
-                  <p>
-                    {issues.length} Issue
-                    {issues.length !== 1 && "s"} Open
-                  </p>
-                )
-              }
+      {projectsList.map((project, n) => {
+        return (
+          <div key={project.id + n}>
+            <h2>{project.title}</h2>
+            <div>
+              <button
+                onClick={() =>
+                  setEdit({ active: true, project: project, index: n })
+                }
+              >
+                Edit
+              </button>
             </div>
-          );
-        }
-      )}
+            <p>
+              {new Date(project.creationData.date).toLocaleDateString()}{" "}
+              {new Date(project.creationData.date).toLocaleTimeString()}
+            </p>
+            <div>
+              <h4>Description:</h4>
+              <p>{project.description}</p>
+            </div>
+            <p>Deadline: {project.deadline}</p>
+            {project.members && (
+              <div>
+                <h4>Members:</h4>
+                <ul>
+                  {project.members.map((member, n) => {
+                    return <li key={member + n}>{member}</li>;
+                  })}
+                </ul>
+              </div>
+            )}
+            {
+              // show number of open issues if any
+              project.issues?.filter((issue) => issue.status === "open")
+                .length && (
+                <p>
+                  {project.issues.length} Issue
+                  {project.issues.length !== 1 && "s"} Open
+                </p>
+              )
+            }
+          </div>
+        );
+      })}
     </div>
   );
 };

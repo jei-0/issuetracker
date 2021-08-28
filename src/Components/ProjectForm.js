@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ProjectForm = (props) => {
   const [input, setInput] = useState({});
+  const formFields = ["title", "description", "deadline", "members"];
 
   const handleChange = (e) => {
     const obj = {};
@@ -19,15 +20,27 @@ const ProjectForm = (props) => {
 
     const unixEp = Math.floor(Date.now() / 1000).toString(32);
     const randyNum = Math.random().toString(32).substr(2, 6);
-    const newProject = {
-      ...input,
+    const newProjectData = {
       id: ("P|" + randyNum + unixEp.substr(unixEp.length - 2)).toUpperCase(),
       creationData: {
-        creator: props.user || "User 1",
+        creator: props.user || "You",
         date: new Date(),
       },
     };
-    props.onSubmit(newProject);
+    props.onSubmit(
+      props.formType === "add"
+        ? {
+            ...newProjectData,
+            ...input,
+          }
+        : {
+            projectEntry: {
+              ...props.activeProject,
+              ...input,
+            },
+            projectIndex: props.projectIndex,
+          }
+    );
     setInput({});
   };
 
@@ -35,21 +48,26 @@ const ProjectForm = (props) => {
     <div>
       <form onSubmit={handleSubmit}>
         <h3>{props.formType === "add" ? "New" : "Edit"} Project</h3>
-        <label>
-          Name: <input name="title" onChange={handleChange} type="text" />
-        </label>
-        <label>
-          Description:{" "}
-          <input name="description" onChange={handleChange} type="text" />
-        </label>
-        <label>
-          Deadline:{" "}
-          <input name="deadline" onChange={handleChange} type="date" />
-        </label>
-        <label>
-          Project Members:{" "}
-          <input name="members" onChange={handleChange} type="text" />
-        </label>
+        <div>
+          {formFields.map((field, n) => {
+            return (
+              <label key={field + n}>
+                <span className="field-title">{field}: </span>
+                <input
+                  name={field}
+                  onChange={handleChange}
+                  type={field === "deadline" ? "date" : "text"}
+                  defaultValue={
+                    props.activeProject &&
+                    (field === "members"
+                      ? props.activeProject[field].join(", ")
+                      : props.activeProject[field])
+                  }
+                />
+              </label>
+            );
+          })}
+        </div>
         <div>
           <button type="submit">Submit</button>
           <button onClick={props.onCancel} type="button">
