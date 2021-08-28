@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const ProjectForm = (props) => {
   const [input, setInput] = useState({});
@@ -25,6 +25,7 @@ const ProjectForm = (props) => {
       creationData: {
         creator: props.user || "You",
         date: new Date(),
+        lastUpdate: new Date(),
       },
     };
     props.onSubmit(
@@ -37,6 +38,7 @@ const ProjectForm = (props) => {
             projectEntry: {
               ...props.activeProject,
               ...input,
+              lastUpdate: new Date(),
             },
             projectIndex: props.projectIndex,
           }
