@@ -61,6 +61,7 @@ const ProjectForm = (props) => {
                   type={field === "deadline" ? "date" : "text"}
                   defaultValue={
                     props.activeProject &&
+                    props.activeProject[field]?.length &&
                     (field === "members"
                       ? props.activeProject[field].join(", ")
                       : props.activeProject[field])
