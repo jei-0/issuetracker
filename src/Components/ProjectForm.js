@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { TextField, Typography } from "@material-ui/core";
 
 const ProjectForm = (props) => {
   const [input, setInput] = useState({});
@@ -48,26 +49,46 @@ const ProjectForm = (props) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <h3>{props.formType === "add" ? "New" : "Edit"} Project</h3>
+      <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+        <Typography variant="h5">
+          {props.formType === "add" ? "New" : "Edit"} Project
+        </Typography>
         <div>
           {formFields.map((field, n) => {
+            const fieldProps = {
+              multiline: undefined,
+              minRows: undefined,
+              InputLabelProps: undefined,
+              type: "text",
+              defaultValue: undefined,
+            };
+
+            if (field === "description") {
+              fieldProps.multiline = true;
+              fieldProps.minRows = 2;
+            }
+
+            if (field === "deadline") {
+              fieldProps.InputLabelProps = { shrink: true };
+              fieldProps.type = "date";
+            }
+            if (props.activeProject && props.activeProject[field]?.length) {
+              fieldProps.defaultValue =
+                field === "members"
+                  ? props.activeProject[field].join(", ")
+                  : props.activeProject[field];
+            }
+
             return (
-              <label key={field + n}>
-                <span className="field-title">{field}: </span>
-                <input
-                  name={field}
-                  onChange={handleChange}
-                  type={field === "deadline" ? "date" : "text"}
-                  defaultValue={
-                    props.activeProject &&
-                    props.activeProject[field]?.length &&
-                    (field === "members"
-                      ? props.activeProject[field].join(", ")
-                      : props.activeProject[field])
-                  }
-                />
-              </label>
+              <TextField
+                key={field + n}
+                {...fieldProps}
+                fullWidth
+                label={field}
+                name={field}
+                variant="outlined"
+                onChange={handleChange}
+              />
             );
           })}
         </div>
