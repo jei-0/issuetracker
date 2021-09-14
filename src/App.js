@@ -1,7 +1,9 @@
-import { createTheme } from "@material-ui/core/styles";
+import { createTheme, makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/core";
-import Header from "./Components/Header";
-import ProjectsList from "./Components/ProjectsList";
+import { BrowserRouter as Router } from "react-router-dom";
+import Header from "./components/Header";
+import SideBar from "./components/SideBar";
+import Routes from "./routes";
 
 const theme = createTheme({
   palette: {
@@ -14,13 +16,28 @@ const theme = createTheme({
   },
 });
 
+const useStyles = makeStyles({
+  flex: {
+    display: "flex",
+    flexDirection: "row",
+  },
+});
+
 function App() {
+  const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
-        <Header />
-        <ProjectsList />
-      </div>
+      <Router>
+        <div className="App">
+          <Header />
+          <div className={classes.flex}>
+            <SideBar />
+            <div className="content">
+              <Routes />
+            </div>
+          </div>
+        </div>
+      </Router>
     </ThemeProvider>
   );
 }
