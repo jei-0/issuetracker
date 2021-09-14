@@ -14,7 +14,7 @@ const Header = (props) => {
             <MenuIcon />
           </IconButton>
           <Typography noWrap variant="h6">
-            IssueTrackerJO
+            IssueTracker
           </Typography>
           <div>
             <IconButton color="inherit" aria-label="show mails">
