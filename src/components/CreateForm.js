@@ -54,7 +54,7 @@ const CreateForm = ({ currentUser, fresh, onDiscard }) => {
     e.preventDefault();
 
     const newItemData = {
-      id: (type === "project" ? "P." : "I.") + nanoid(9),
+      id: (type === "project" ? "P" : "I") + nanoid(9),
       "modified on": new Date(),
       "modified by": currentUser || "You",
       "created on": new Date(),
