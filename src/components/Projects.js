@@ -1,43 +1,36 @@
-import { useProjectsContext } from "../contexts/ProjectsContext";
+import useFetch from "../hooks/useFetch";
 import { useHistory } from "react-router-dom";
 
 const Projects = () => {
-  let history = useHistory();
-  const { projects, deleteFromProjects } = useProjectsContext();
+  const { data, error, isLoading } = useFetch(
+    "https://jsonplaceholder.typicode.com/users",
+    {
+      name: "Adam",
+      username: "lotADAMage",
+      id: 11,
+    }
+  );
 
-  const handleEditClick = (id) => {
-    history.push(`/edit/${id}`);
-  };
+  let history = useHistory();
+
+  // const handleEditClick = (id) => {
+  //   history.push(`/edit/${id}`);
+  // };
+
+  if (error) {
+    return (
+      <div>
+        <p>Sorry! There was an error getting the data. 😓</p>
+        <p>{error.message}</p>
+      </div>
+    );
+  }
+  if (isLoading) {
+    return <p>One moment, please! ☝️</p>;
+  }
   return (
     <div>
-      {projects.map((project, n) => {
-        return (
-          <div key={project.id + n}>
-            <h2>{project["project name"]}</h2>
-            <p>{project.id}</p>
-            <div>
-              <button onClick={() => handleEditClick(project.id)}>Edit</button>
-              <button onClick={() => deleteFromProjects(project)}>
-                Delete
-              </button>
-            </div>
-            <p>
-              Created On: {new Date(project["created on"]).toLocaleDateString()}{" "}
-              {new Date(project["created on"]).toLocaleTimeString()}
-            </p>
-            <div>
-              <p>
-                Start Date:{" "}
-                {new Date(project["start date"]).toLocaleDateString()}
-              </p>
-            </div>
-            <p>
-              Target End Date:{" "}
-              {new Date(project["target end date"]).toLocaleDateString()}
-            </p>
-          </div>
-        );
-      })}
+      {data?.name} | {data?.username} | {data?.id}
     </div>
   );
 };
