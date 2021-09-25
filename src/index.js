@@ -3,20 +3,11 @@ import ReactDOM from "react-dom";
 import "normalize.css";
 import "./styles/index.css";
 import App from "./App";
-import { ProjectsProvider } from "./contexts/ProjectsContext";
-import { IssuesProvider } from "./contexts/IssuesContext";
-import { UsersProvider } from "./contexts/UsersContext";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ProjectsProvider>
-      <IssuesProvider>
-        <UsersProvider>
-          <App />
-        </UsersProvider>
-      </IssuesProvider>
-    </ProjectsProvider>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
